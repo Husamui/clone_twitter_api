@@ -4,7 +4,7 @@ import express from 'express';
 import { graphiqlExpress, graphqlExpress } from 'apollo-server-express';
 import { makeExecutableSchema } from 'graphql-tools';
 import bodyParser from 'body-parser';
-import { createServer } from 'http'
+import { createServer } from 'http';
 
 
 import './config/db';
