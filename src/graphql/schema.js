@@ -9,6 +9,7 @@ export default`
     }
     type Mutation {
         createTweet(text: String!): Tweet
+        updateTweet(_id: ID!, text: String): Tweet
     }
     schema {
         query: Query
