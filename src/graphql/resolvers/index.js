@@ -1,5 +1,6 @@
 import graphQLDate from 'graphql-date'
 import TweetResolvers from './tweet-resolvers';
+import UserResolvers from './user-resolvers';
 
 export default {
     Date: graphQLDate,
@@ -10,6 +11,8 @@ export default {
     Mutation: {
         createTweet: TweetResolvers.createTweet,
         updateTweet: TweetResolvers.updateTweet,
-        deleteTweet: TweetResolvers.delateTweet
+        deleteTweet: TweetResolvers.delateTweet,
+        signup: UserResolvers.signup,
+        login: UserResolvers.login
     }
 }
