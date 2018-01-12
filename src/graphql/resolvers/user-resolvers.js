@@ -1,21 +1,40 @@
 
 import User from '../../models/User';
+import { requireAuth } from '../../services/auth'
 
 
 export default {
-    signup: (_, {fullname, ...rest}) => {
-        const [firstname, ...lastname] = fullname.split(' ');
-        return User.create({firstname, lastname, ...rest})
+    signup: async (_, {fullname, ...rest}) => {
+        try {
+            const [firstname, ...lastname] = fullname.split(' ');
+            const user =  await User.create({firstname, lastname, ...rest})
+            return { token: user.createToken() };
+        } catch (err) {
+            throw err
+        }
     },
     login: async (_, {email, password}) => {
-        const user = await User.findOne({email});
+        try {
 
-        if(!user) {
-            throw new Error('User not exist!');
+            const user = await User.findOne({email});
+            if(!user) {
+                throw new Error('User not exist!');
+            }
+            if(!user.authenticateUser(password)) {
+                throw new Error('Password not match!');
+            }
+            return {token: user.createToken()};
+
+        } catch (err) {
+            throw err
         }
-        if(!user.authenticateUser(password)) {
-            throw new Error('Password not match!');
+    },
+    me: async (_, args, {user}) => {
+        try {
+            const me = await requireAuth(user);
+            return me;
+        } catch (err) {
+            throw err
         }
-        return user;
     }
 }

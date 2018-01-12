@@ -6,13 +6,15 @@ export default {
     Date: graphQLDate,
     Query: {
         getTweet: TweetResolvers.getTweet,
-        getTweets: TweetResolvers.getTweets
+        getTweets: TweetResolvers.getTweets,
+        me: UserResolvers.me
     },
     Mutation: {
         createTweet: TweetResolvers.createTweet,
         updateTweet: TweetResolvers.updateTweet,
         deleteTweet: TweetResolvers.delateTweet,
         signup: UserResolvers.signup,
-        login: UserResolvers.login
+        login: UserResolvers.login,
+       
     }
 }
