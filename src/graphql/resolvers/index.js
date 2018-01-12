@@ -13,6 +13,7 @@ export default {
     Query: {
         getTweet: TweetResolvers.getTweet,
         getTweets: TweetResolvers.getTweets,
+        getUserTweets: TweetResolvers.getUserTweets,
         me: UserResolvers.me
     },
     Mutation: {

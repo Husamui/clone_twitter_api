@@ -39,6 +39,7 @@ export default`
     type Query {
         getTweet(_id: ID!): Tweet
         getTweets: [Tweet]
+        getUserTweets: [Tweet]
         me: Me
     }
     type Mutation {
