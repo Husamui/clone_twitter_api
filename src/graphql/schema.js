@@ -11,6 +11,8 @@ export default`
     type Tweet {
         _id: String
         text: String
+        user: User!
+        favoriteCount: Int!
         createdAt: Date
         updatedAt: Date
     }
