@@ -1,9 +1,36 @@
-
 import User from '../../models/User';
 import { requireAuth } from '../../services/auth'
+import FB from '../../config/FB'
 
+const fb = new FB();
 
 export default {
+    facebookAuth: async (_, { access_token }) => {
+        try {
+            const fbResponse = await fb.call('me', { access_token, fields: 'id,name,email' });
+            const fbProfile = JSON.parse(fbResponse);
+            
+            let user = await User.findOne({'facebookProvider.id': fbProfile.id})
+
+            if(!user){
+                const [firstname, ...lastname] = fbProfile.name.split(' ');
+                const userToSave = {
+                    email: fbProfile.email,
+                    firstname,
+                    lastname,
+                    facebookProvider: {
+                        id: fbProfile.id,
+                        token: access_token
+                    },
+                }
+                user = await User.create(userToSave)
+            }
+            return {token: user.createToken()}
+
+        } catch (err) {
+            throw err
+        }
+    },
     signup: async (_, {fullname, ...rest}) => {
         try {
             const [firstname, ...lastname] = fullname.split(' ');
@@ -32,6 +59,7 @@ export default {
     me: async (_, args, {user}) => {
         try {
             const me = await requireAuth(user);
+            me.avatar = `https://graph.facebook.com/${me.facebookProvider.id}/picture?type=large`
             return me;
         } catch (err) {
             throw err

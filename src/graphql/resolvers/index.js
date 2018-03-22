@@ -22,6 +22,6 @@ export default {
         deleteTweet: TweetResolvers.delateTweet,
         signup: UserResolvers.signup,
         login: UserResolvers.login,
-       
+        facebookAuth: UserResolvers.facebookAuth,
     }
 }

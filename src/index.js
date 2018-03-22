@@ -4,17 +4,18 @@ import { createServer } from 'http';
 import middlewares from './config/middlewares';
 
 import './config/db';
-import constants from './config/constants'
 
 const app = express();
+
+
 middlewares(app);
 
 const graphqlServer = createServer(app);
 
-graphqlServer.listen(constants.PORT, err => {
+graphqlServer.listen(9000, err => {
   if (err) {
     console.error(err);
   } else {
-    console.log(`App listen on port: ${constants.PORT}`);
+    console.log(`App listen on port: 9000`);
   }
 });

@@ -1,6 +1,7 @@
 import bodyParser from 'body-parser';
 import { graphiqlExpress, graphqlExpress } from 'apollo-server-express';
 import { makeExecutableSchema } from 'graphql-tools';
+import  expressPlayground  from 'graphql-playground-middleware-express';
 
 import constants from './constants';
 import typeDefs from '../graphql/schema';
@@ -16,7 +17,7 @@ const schema = makeExecutableSchema({
 async function auth(req, res, next) {
     try {
       const token = req.headers.authorization;
-      if (token != null) {
+      if (token != null && token.length > 20) {
         const user = await decodeToken(token);
         req.user = user; // eslint-disable-line
       } else {
@@ -46,4 +47,5 @@ export default app => {
         }
       })),
     );
+  app.get('/playground', expressPlayground({ endpoint: '/graphql' }))
 }

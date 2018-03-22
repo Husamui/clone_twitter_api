@@ -1,7 +1,6 @@
 
 import Tweet from '../../models/Tweet';
 import { requireAuth } from '../../services/auth'
-import { Error } from 'mongoose';
 
 export default {
     getTweet: async (_, {_id}, {user}) => {

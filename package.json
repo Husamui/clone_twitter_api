@@ -1,5 +1,5 @@
 {
-  "name": "twitter_api",
+  "name": "skilledit",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -18,9 +18,13 @@
     "express": "^4.16.2",
     "graphql": "^0.11.7",
     "graphql-date": "^1.0.3",
+    "graphql-playground-middleware-express": "^1.5.7",
     "graphql-tools": "^2.13.0",
     "jsonwebtoken": "^8.1.0",
-    "mongoose": "^4.13.7"
+    "mongoose": "^4.13.7",
+    "passport": "^0.4.0",
+    "passport-facebook-token": "^3.3.0",
+    "reqeust": "^2.81.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

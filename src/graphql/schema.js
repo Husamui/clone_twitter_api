@@ -48,6 +48,7 @@ export default`
         deleteTweet(_id: ID!): Status
         signup(fullname: String, username: String, email: String, avatar: String, password: String): auth
         login(email: String, password: String): auth
+        facebookAuth(access_token: String): auth
     }
     schema {
         query: Query

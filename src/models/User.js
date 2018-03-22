@@ -6,11 +6,22 @@ import constants from '../config/constants';
 
 const UserSchema = new Schema({
     username: { type: String, unique: true },
-    email: String,
     firstname: String,
     lastname: String,
     avatar: String,
     password: String,
+    email: {
+        type: String, required: true,
+        trim: true, unique: true,
+        match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+  },
+  facebookProvider: {
+        type: {
+              id: String,
+              token: String
+        },
+        // select: false
+  }
 }, {timestamps: true});
 
 UserSchema.pre('save', function(next) {
@@ -38,5 +49,6 @@ UserSchema.methods = {
     }
 
 }
+
 
 export default mongoose.model('User', UserSchema);
