@@ -64,5 +64,16 @@ export default {
         } catch (err) {
             throw err
         }
+    },
+    getUsers: async(_, args, {user}) => {
+        try {
+            await requireAuth(user);
+            const users = await User.find({});
+            users.forEach(mentor => (mentor.avatar = `https://graph.facebook.com/${mentor.facebookProvider.id}/picture?type=large`))
+            // me.avatar = `https://graph.facebook.com/${me.facebookProvider.id}/picture?type=large`
+            return users;
+        } catch (err) {
+            throw err
+        }
     }
 }
