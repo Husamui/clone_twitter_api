@@ -16,6 +16,7 @@ export default {
                 const [firstname, ...lastname] = fbProfile.name.split(' ');
                 const userToSave = {
                     email: fbProfile.email,
+                    username: fbProfile.email,
                     firstname,
                     lastname,
                     facebookProvider: {
@@ -25,7 +26,7 @@ export default {
                 }
                 user = await User.create(userToSave)
             }
-            return {token: user.createToken()}
+            return {token: user.createToken(), newUser: true}
 
         } catch (err) {
             throw err
@@ -61,6 +62,29 @@ export default {
             const me = await requireAuth(user);
             me.avatar = `https://graph.facebook.com/${me.facebookProvider.id}/picture?type=large`
             return me;
+        } catch (err) {
+            throw err
+        }
+    },
+    updateUser: async (_, args, { user }) => {
+        try {
+            const { fullName, ...rest } = args;
+            const DbUser = await requireAuth(user);
+
+            console.log(rest.interests)
+            if (fullName) {
+                const [firstname, ...lastname] = fullName.split(' ');
+                DbUser.firstname = firstname
+                DbUser.lastname = lastname
+            }
+            Object.entries(rest).forEach(( [key, value] ) => {
+                if(value.length) {
+                    DbUser[key] = value;
+                }
+            });
+            const newUser = await DbUser.save();
+            newUser.avatar = `https://graph.facebook.com/${newUser.facebookProvider.id}/picture?type=large`
+            return newUser;
         } catch (err) {
             throw err
         }

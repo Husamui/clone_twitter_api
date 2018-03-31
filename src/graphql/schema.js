@@ -4,6 +4,7 @@ export default`
 
     type auth {
         token: String
+        newUser: Boolean
     }
     type Status {
         message: String
@@ -23,6 +24,11 @@ export default`
         firstname: String
         lastname: String
         avatar: String
+        title: String
+        bio: String
+        location: String
+        interests: [String]
+        connections: [User]
         createdAt: Date
         updatedAt: Date
     }
@@ -33,6 +39,11 @@ export default`
         firstname: String
         lastname: String
         avatar: String
+        title: String
+        location: String
+        bio: String
+        connections: [User]
+        interests: [String]
         createdAt: Date
         updatedAt: Date
     }
@@ -49,6 +60,8 @@ export default`
         deleteTweet(_id: ID!): Status
         signup(fullname: String, username: String, email: String, avatar: String, password: String): auth
         login(email: String, password: String): auth
+        login(email: String, password: String): auth
+        updateUser(fullName: String, title: String, location: String, bio: String, interests: [String]): User
         facebookAuth(access_token: String): auth
     }
     schema {

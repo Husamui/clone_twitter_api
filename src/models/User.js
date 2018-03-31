@@ -9,19 +9,28 @@ const UserSchema = new Schema({
     firstname: String,
     lastname: String,
     avatar: String,
+    title: String,
     password: String,
+    bio: String,
+    location: String,
+    interests: [String],
+    connections: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+
     email: {
         type: String, required: true,
         trim: true, unique: true,
         match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-  },
-  facebookProvider: {
+    },
+    facebookProvider: {
         type: {
-              id: String,
-              token: String
+            id: String,
+            token: String
         },
         // select: false
-  }
+    }
 }, {timestamps: true});
 
 UserSchema.pre('save', function(next) {
