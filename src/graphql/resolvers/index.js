@@ -1,5 +1,5 @@
 import graphQLDate from 'graphql-date'
-import TweetResolvers from './tweet-resolvers';
+import PostResolvers from './post-resolvers';
 import UserResolvers from './user-resolvers';
 import User from '../../models/User';
 
@@ -7,20 +7,22 @@ import User from '../../models/User';
 export default {
     
     Date: graphQLDate,
-    Tweet: {
+    Post: {
         user: ({user}) => User.findById(user)
     },
     Query: {
-        getTweet: TweetResolvers.getTweet,
-        getTweets: TweetResolvers.getTweets,
-        getUserTweets: TweetResolvers.getUserTweets,
+        getPost: PostResolvers.getPost,
+        getPosts: PostResolvers.getPosts,
+        getUserPosts: PostResolvers.getUserPosts,
+        getMyPosts: PostResolvers.getMyPosts,
         getUsers: UserResolvers.getUsers,
+        getUser: UserResolvers.getUser,
         me: UserResolvers.me
     },
     Mutation: {
-        createTweet: TweetResolvers.createTweet,
-        updateTweet: TweetResolvers.updateTweet,
-        deleteTweet: TweetResolvers.delateTweet,
+        createPost: PostResolvers.createPost,
+        updatePost: PostResolvers.updatePost,
+        deletePost: PostResolvers.delatePost,
         signup: UserResolvers.signup,
         login: UserResolvers.login,
         updateUser: UserResolvers.updateUser,

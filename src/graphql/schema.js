@@ -9,11 +9,13 @@ export default`
     type Status {
         message: String
     }
-    type Tweet {
+    type Post {
         _id: String
         text: String
         user: User!
-        favoriteCount: Int!
+        likesCount: Int!
+        commentsCount: Int!
+        me: Boolean!
         createdAt: Date
         updatedAt: Date
     }
@@ -48,16 +50,18 @@ export default`
         updatedAt: Date
     }
     type Query {
-        getTweet(_id: ID!): Tweet
-        getTweets: [Tweet]
-        getUserTweets: [Tweet]
+        getPost(_id: ID!): Post
+        getPosts: [Post]
+        getMyPosts: [Post]
+        getUserPosts(_id: String): [Post]
         getUsers: [User]
+        getUser(_id: String!): User
         me: Me
     }
     type Mutation {
-        createTweet(text: String!): Tweet
-        updateTweet(_id: ID!, text: String): Tweet
-        deleteTweet(_id: ID!): Status
+        createPost(text: String!): Post
+        updatePost(_id: ID!, text: String): Post
+        deletePost(_id: ID!): Status
         signup(fullname: String, username: String, email: String, avatar: String, password: String): auth
         login(email: String, password: String): auth
         login(email: String, password: String): auth

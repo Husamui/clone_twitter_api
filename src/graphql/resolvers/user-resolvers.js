@@ -26,7 +26,7 @@ export default {
                 }
                 user = await User.create(userToSave)
             }
-            return {token: user.createToken(), newUser: true}
+            return {token: user.createToken(), newUser: false}
 
         } catch (err) {
             throw err
@@ -60,6 +60,8 @@ export default {
     me: async (_, args, {user}) => {
         try {
             const me = await requireAuth(user);
+
+            
             me.avatar = `https://graph.facebook.com/${me.facebookProvider.id}/picture?type=large`
             return me;
         } catch (err) {
@@ -71,7 +73,8 @@ export default {
             const { fullName, ...rest } = args;
             const DbUser = await requireAuth(user);
 
-            console.log(rest.interests)
+            DbUser.avatar = `https://graph.facebook.com/${DbUser.facebookProvider.id}/picture?type=large`
+            
             if (fullName) {
                 const [firstname, ...lastname] = fullName.split(' ');
                 DbUser.firstname = firstname
@@ -92,10 +95,20 @@ export default {
     getUsers: async(_, args, {user}) => {
         try {
             await requireAuth(user);
-            const users = await User.find({});
+            const users = await User.find({ _id: { $nin: user._id } });
             users.forEach(mentor => (mentor.avatar = `https://graph.facebook.com/${mentor.facebookProvider.id}/picture?type=large`))
             // me.avatar = `https://graph.facebook.com/${me.facebookProvider.id}/picture?type=large`
             return users;
+        } catch (err) {
+            throw err
+        }
+    },
+    getUser: async(_, { _id }, {user}) => {
+        try {
+            await requireAuth(user);
+            const profile = await User.findOne({ _id });
+            profile.avatar = `https://graph.facebook.com/${profile.facebookProvider.id}/picture?type=large`
+            return profile;
         } catch (err) {
             throw err
         }

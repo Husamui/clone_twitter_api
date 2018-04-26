@@ -40,6 +40,7 @@ UserSchema.pre('save', function(next) {
     return next();
 });
 
+
 UserSchema.methods = {
     _hashPassword(password){
         return hashSync(password);
